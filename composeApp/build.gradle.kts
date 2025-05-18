@@ -72,6 +72,8 @@ kotlin {
             implementation(libs.material3.window.size.class1)
             implementation(compose.material3AdaptiveNavigationSuite)
             implementation(libs.material.icons.extended)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor3)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

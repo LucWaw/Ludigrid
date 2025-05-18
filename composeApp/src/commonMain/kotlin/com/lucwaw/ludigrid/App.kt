@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.lucwaw.ludigrid.screen.home.HomeScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import ludigrid.composeapp.generated.resources.Res
@@ -45,8 +46,8 @@ fun App(windowSizeClass: WindowSizeClass) {
             }
         ) {
             when (currentDestination) {
-                AppDestinations.HOME -> HomeDestination()
-                AppDestinations.PROFILE -> ProfileDestination()
+                AppDestinations.HOME -> HomeScreen(windowSizeClass)
+                AppDestinations.PROFILE -> ProfileScreen()
             }
         }
     }
@@ -54,18 +55,13 @@ fun App(windowSizeClass: WindowSizeClass) {
 }
 
 @Composable
-fun ProfileDestination() {
+fun ProfileScreen() {
     Box(Modifier.fillMaxSize()){
         Text("Profile")
     }
 }
 
-@Composable
-fun HomeDestination() {
-    Box(Modifier.fillMaxSize()){
-        Text("Home")
-    }
-}
+
 
 
 enum class AppDestinations(
