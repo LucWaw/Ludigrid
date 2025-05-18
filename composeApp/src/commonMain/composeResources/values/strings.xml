@@ -1,0 +1,4 @@
+<resources>
+    <string name="profile_route">Profile</string>
+    <string name="home_route">Home</string>
+</resources>

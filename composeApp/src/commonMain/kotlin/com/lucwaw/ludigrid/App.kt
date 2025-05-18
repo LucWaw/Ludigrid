@@ -1,44 +1,77 @@
 package com.lucwaw.ludigrid
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import ludigrid.composeapp.generated.resources.Res
-import ludigrid.composeapp.generated.resources.compose_multiplatform
+import ludigrid.composeapp.generated.resources.home_route
+import ludigrid.composeapp.generated.resources.profile_route
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 @Preview
-fun App() {
+fun App(windowSizeClass: WindowSizeClass) {
+    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+        NavigationSuiteScaffold(
+            navigationSuiteItems = {
+                AppDestinations.entries.forEach {
+                    item(
+                        icon = {
+                            Icon(
+                                it.icon,
+                                contentDescription = stringResource(it.label)
+                            )
+                        },
+                        label = { Text(stringResource(it.label)) },
+                        selected = it == currentDestination,
+                        onClick = { currentDestination = it }
+                    )
                 }
+            }
+        ) {
+            when (currentDestination) {
+                AppDestinations.HOME -> HomeDestination()
+                AppDestinations.PROFILE -> ProfileDestination()
             }
         }
     }
+
+}
+
+@Composable
+fun ProfileDestination() {
+    Box(Modifier.fillMaxSize()){
+        Text("Profile")
+    }
+}
+
+@Composable
+fun HomeDestination() {
+    Box(Modifier.fillMaxSize()){
+        Text("Home")
+    }
+}
+
+
+enum class AppDestinations(
+    val label: StringResource,
+    val icon: ImageVector
+) {
+    HOME(Res.string.home_route, Icons.Default.Home),
+    PROFILE(Res.string.profile_route, Icons.Default.AccountBox),
 }
