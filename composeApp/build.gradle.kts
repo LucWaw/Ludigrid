@@ -59,6 +59,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation("androidx.compose.material3:material3:1.4.0-alpha14")
         }
         commonMain.dependencies {
             implementation(compose.runtime)

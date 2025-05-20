@@ -42,18 +42,22 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
 
 @Composable
-fun HomeScreen(windowSizeClass: WindowSizeClass) {
+fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit) {
     Scaffold { paddingValues ->
-        LazyVerticalGrid(
-            columns = rememberColumns(windowSizeClass),
-            contentPadding = PaddingValues(18.dp),
-            modifier = Modifier.padding(paddingValues),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ){
-            items(25){
-                Post(Post)
+        Box(
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            LazyVerticalGrid(
+                columns = rememberColumns(windowSizeClass),
+                contentPadding = PaddingValues(18.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ){
+                items(25){
+                    Post(Post, onClick = onNavigateToDetail)
+                }
             }
+
         }
 
     }
@@ -85,14 +89,15 @@ data object Post {
 @Composable
 fun Post(
     post: Post,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
         onClick =
-            { /*TODO*/ },
+            { onClick() },
         modifier = modifier
             .width(360.dp)
             .height(342.dp)
@@ -185,23 +190,22 @@ fun Post(
                             modifier = Modifier.fillMaxSize()
                         )
                     } else {
-                        Column(
+                        Image(
+                            painter = ColorPainter(Color.Red),
+                            contentDescription = "Error",
+                            modifier = Modifier.fillMaxSize()
+                        )
+                        /*Column(
                             modifier = Modifier.fillMaxSize(),
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.Warning,
-                                contentDescription = null,
-                                tint = Color.Red,
-                                modifier = Modifier
-                                    .size(150.dp)
-                            )
+
                             Text(
                                 text = "Error when loading image",
                                 textAlign = TextAlign.Center
                             )
-                        }
+                        }*/
                     }
                 }
             )

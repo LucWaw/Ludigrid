@@ -10,46 +10,64 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import com.lucwaw.ludigrid.screen.home.HomeScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
-import ludigrid.composeapp.generated.resources.Res
-import ludigrid.composeapp.generated.resources.home_route
-import ludigrid.composeapp.generated.resources.profile_route
-import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 @Preview
 fun App(windowSizeClass: WindowSizeClass) {
-    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
+    var currentScreen by rememberSaveable { mutableStateOf(Screen.HOME) }
     MaterialTheme {
-        NavigationSuiteScaffold(
-            navigationSuiteItems = {
-                AppDestinations.entries.forEach {
+
+        if (currentScreen == Screen.HOME || currentScreen == Screen.PROFILE) {
+            NavigationSuiteScaffold(
+                navigationSuiteItems = {
                     item(
-                        icon = {
-                            Icon(
-                                it.icon,
-                                contentDescription = stringResource(it.label)
-                            )
-                        },
-                        label = { Text(stringResource(it.label)) },
-                        selected = it == currentDestination,
-                        onClick = { currentDestination = it }
+                        icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
+                        label = { Text("Home") },
+                        selected = currentScreen == Screen.HOME,
+                        onClick = { currentScreen = Screen.HOME }
+                    )
+                    item(
+                        icon = { Icon(Icons.Default.AccountBox, contentDescription = "Profile") },
+                        label = { Text("Profile") },
+                        selected = currentScreen == Screen.PROFILE,
+                        onClick = { currentScreen = Screen.PROFILE }
                     )
                 }
+            ) {
+                when (currentScreen) {
+                    Screen.HOME -> HomeScreen(
+                        windowSizeClass = windowSizeClass,
+                        onNavigateToDetail = { currentScreen = Screen.DETAIL }
+                    )
+                    Screen.PROFILE -> ProfileScreen()
+                    else -> {}
+                }
             }
-        ) {
-            when (currentDestination) {
-                AppDestinations.HOME -> HomeScreen(windowSizeClass)
-                AppDestinations.PROFILE -> ProfileScreen()
+        } else {
+            // Pas de bottom bar ici
+            when (currentScreen) {
+                Screen.DETAIL -> DetailScreen(onBack = { currentScreen = Screen.HOME })
+                else -> {}
             }
         }
+    }
+
+}
+
+@Composable
+fun DetailScreen(onBack: () -> Unit) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ){
+        ToolBar()
     }
 
 }
@@ -64,10 +82,9 @@ fun ProfileScreen() {
 
 
 
-enum class AppDestinations(
-    val label: StringResource,
-    val icon: ImageVector
+enum class Screen(
 ) {
-    HOME(Res.string.home_route, Icons.Default.Home),
-    PROFILE(Res.string.profile_route, Icons.Default.AccountBox),
+    HOME(),
+    PROFILE(),
+    DETAIL()
 }

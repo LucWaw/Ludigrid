@@ -1,9 +1,56 @@
 package com.lucwaw.ludigrid
 
 import android.os.Build
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingToolbarDefaults
+import androidx.compose.material3.FloatingToolbarState
+import androidx.compose.material3.HorizontalFloatingToolbar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.VerticalFloatingToolbar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 class AndroidPlatform : Platform {
     override val name: String = "Android ${Build.VERSION.SDK_INT}"
 }
 
 actual fun getPlatform(): Platform = AndroidPlatform()
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+actual fun BoxScope.ToolBar(modifier: Modifier){
+    var expanded by rememberSaveable { mutableStateOf(true) }
+
+    VerticalFloatingToolbar(
+        expanded = expanded,
+        floatingActionButton = {
+            FloatingToolbarDefaults.VibrantFloatingActionButton(
+                {/*TODO*/}
+            ) { Icon(Icons.Filled.Add,contentDescription = "Add A comment")}
+        },
+        modifier =
+            Modifier.align(Alignment.BottomEnd).padding(bottom = 5.dp)
+    ) {
+        IconButton(onClick = { /* doSomething() */ }) {
+            Icon(Icons.Filled.Share, contentDescription = "Share The Content")
+        }
+        IconButton(onClick = { /* doSomething() */ }) {
+            Icon(Icons.Filled.Delete, contentDescription = "Delete The Post")
+        }
+
+    }
+}

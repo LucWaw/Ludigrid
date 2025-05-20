@@ -1,5 +1,8 @@
 package com.lucwaw.ludigrid
 
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import platform.UIKit.UIDevice
 
 class IOSPlatform: Platform {
@@ -7,3 +10,8 @@ class IOSPlatform: Platform {
 }
 
 actual fun getPlatform(): Platform = IOSPlatform()
+
+@Composable
+actual fun BoxScope.ToolBar(modifier: Modifier) {
+    TODO("Not yet implemented")
+}
