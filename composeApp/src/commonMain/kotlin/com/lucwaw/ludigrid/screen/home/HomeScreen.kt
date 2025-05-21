@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Share
@@ -29,6 +30,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -46,6 +49,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -66,7 +71,7 @@ fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit)
             var isSearchActive by rememberSaveable { mutableStateOf(false) }
             var searchQuery by remember { mutableStateOf("") }
 
-            Column(verticalArrangement = Arrangement.spacedBy((-1).dp)) {
+            Column() {
                 TopAppBar(
                     title = { Text(text = stringResource(Res.string.games)) },
                     actions = {
@@ -122,15 +127,46 @@ fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit)
                         }
                     }
                 )
-                /*SearchBar {  } EmbeddedSearchBar(
-                    query = searchQuery,
-                    onQueryChange = {
-                        searchQuery = it
-                        //TODO Filter
+
+
+
+
+                SearchBar(
+                    modifier = Modifier
+                        .semantics { traversalIndex = 0f }.fillMaxWidth().padding(16.dp),
+                    inputField = {
+                        SearchBarDefaults.InputField(
+                            query = searchQuery,
+                            onQueryChange = {
+                                searchQuery = it
+                             },
+                            onSearch = {
+                                /*TODO FILTER*/
+                                isSearchActive = false
+                            },
+                            expanded = isSearchActive,
+                            onExpandedChange = { isSearchActive = it },
+                            placeholder = { Text("Search") },
+                            trailingIcon = {
+                                if (isSearchActive){
+                                    IconButton(
+                                        onClick = { isSearchActive = false }
+                                    ) {
+                                        Icon(Icons.Default.Close, "Close the Search Field")
+                                    }
+                                }
+
+                            }
+                        )
                     },
-                    isSearchActive = isSearchActive,
-                    onActiveChanged = { isSearchActive = it }
-                )*/
+                    expanded = isSearchActive,
+                    onExpandedChange = { isSearchActive = it },
+                ) {
+                    // Display search results in a scrollable column
+
+                    LazyGrid(windowSizeClass, onNavigateToDetail = {})
+
+                }
 
             }
         }
@@ -138,19 +174,25 @@ fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit)
         Box(
             modifier = Modifier.padding(paddingValues)
         ) {
-            LazyVerticalGrid(
-                columns = rememberColumns(windowSizeClass),
-                contentPadding = PaddingValues(18.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ){
-                items(25){
-                    Post(Post, onClick = onNavigateToDetail)
-                }
-            }
+            LazyGrid(windowSizeClass, onNavigateToDetail)
 
         }
 
+    }
+}
+
+
+@Composable
+fun LazyGrid(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit) {
+    LazyVerticalGrid(
+        columns = rememberColumns(windowSizeClass),
+        contentPadding = PaddingValues(18.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ){
+        items(25){
+            Post(Post, onClick = onNavigateToDetail)
+        }
     }
 }
 
