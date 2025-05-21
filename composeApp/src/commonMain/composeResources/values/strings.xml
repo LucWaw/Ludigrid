@@ -2,4 +2,9 @@
     <string name="profile_route">Profile</string>
     <string name="home_route">Home</string>
     <string name="detail_route">Detail</string>
+    <string name="sort_options">Sort Options</string>
+    <string name="sort_name">Sort by name</string>
+    <string name="sort_rating">Sort by rating</string>
+    <string name="sort_date">Sort by date</string>
+    <string name="games">Board games</string>
 </resources>

@@ -2,4 +2,9 @@
     <string name="profile_route">Profile</string>
     <string name="home_route">Home</string>
     <string name="detail_route">Detail</string>
+    <string name="sort_options">Options de tri</string>
+    <string name="sort_name">Trier par nom</string>
+    <string name="sort_rating">Trier par note</string>
+    <string name="sort_date">Trier par date</string>
+    <string name="games">Jeux de société</string>
 </resources>

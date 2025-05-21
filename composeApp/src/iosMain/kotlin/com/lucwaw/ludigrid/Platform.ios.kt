@@ -13,5 +13,5 @@ actual fun getPlatform(): Platform = IOSPlatform()
 
 @Composable
 actual fun BoxScope.ToolBar(modifier: Modifier) {
-    TODO("Not yet implemented")
+    //Nothing
 }

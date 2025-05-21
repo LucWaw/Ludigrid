@@ -8,13 +8,10 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingToolbarDefaults
-import androidx.compose.material3.FloatingToolbarState
 import androidx.compose.material3.HorizontalFloatingToolbar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.VerticalFloatingToolbar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,7 +32,7 @@ actual fun getPlatform(): Platform = AndroidPlatform()
 actual fun BoxScope.ToolBar(modifier: Modifier){
     var expanded by rememberSaveable { mutableStateOf(true) }
 
-    VerticalFloatingToolbar(
+    HorizontalFloatingToolbar(
         expanded = expanded,
         floatingActionButton = {
             FloatingToolbarDefaults.VibrantFloatingActionButton(
@@ -43,7 +40,7 @@ actual fun BoxScope.ToolBar(modifier: Modifier){
             ) { Icon(Icons.Filled.Add,contentDescription = "Add A comment")}
         },
         modifier =
-            Modifier.align(Alignment.BottomEnd).padding(bottom = 5.dp)
+            Modifier.align(Alignment.BottomCenter).padding(bottom = 50.dp)
     ) {
         IconButton(onClick = { /* doSomething() */ }) {
             Icon(Icons.Filled.Share, contentDescription = "Share The Content")
