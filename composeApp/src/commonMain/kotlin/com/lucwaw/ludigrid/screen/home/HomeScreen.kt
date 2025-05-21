@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -55,6 +56,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
+import com.lucwaw.ludigrid.domain.Author
+import com.lucwaw.ludigrid.domain.Post
 import ludigrid.composeapp.generated.resources.Res
 import ludigrid.composeapp.generated.resources.games
 import ludigrid.composeapp.generated.resources.sort_date
@@ -66,12 +69,24 @@ import org.jetbrains.compose.resources.stringResource
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit) {
+    val post = Post(
+        id = "1",
+        author = Author(
+            id = "1",
+            name = "John Doe",
+            avatar = "https://www.example.com"
+        ),
+        title = "Codenames",
+        description = "Description",
+        image = "https://www.example.com"
+    )
+    val posts = List(25) { post.copy(id = it.toString()) }
     Scaffold(
         topBar = {
             var isSearchActive by rememberSaveable { mutableStateOf(false) }
             var searchQuery by remember { mutableStateOf("") }
 
-            Column() {
+            Column {
                 TopAppBar(
                     title = { Text(text = stringResource(Res.string.games)) },
                     actions = {
@@ -164,7 +179,7 @@ fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit)
                 ) {
                     // Display search results in a scrollable column
 
-                    LazyGrid(windowSizeClass, onNavigateToDetail = {})
+                    LazyGrid(posts, windowSizeClass, onNavigateToDetail = {})
 
                 }
 
@@ -174,7 +189,7 @@ fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit)
         Box(
             modifier = Modifier.padding(paddingValues)
         ) {
-            LazyGrid(windowSizeClass, onNavigateToDetail)
+            LazyGrid(posts,windowSizeClass, onNavigateToDetail)
 
         }
 
@@ -183,15 +198,16 @@ fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit)
 
 
 @Composable
-fun LazyGrid(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit) {
+fun LazyGrid(posts : List<Post>, windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit) {
     LazyVerticalGrid(
         columns = rememberColumns(windowSizeClass),
         contentPadding = PaddingValues(18.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ){
-        items(25){
-            Post(Post, onClick = onNavigateToDetail)
+        items(posts, key = { item -> item.id }
+        ){
+            Post(it, onClick = onNavigateToDetail)
         }
     }
 }
@@ -203,20 +219,6 @@ private fun rememberColumns(windowSizeClass: WindowSizeClass) = remember(windowS
         WindowWidthSizeClass.Medium -> GridCells.Fixed(2)
         else -> GridCells.Adaptive(240.dp)
     }
-}
-
-data object Author {
-    val id: Long = 0
-    val name: String = "John Doe"
-    val avatar: String = ""
-}
-
-data object Post {
-    val id: Long = 0
-    val title: String = "CodeNames"
-    val author: Author = Author
-    val description: String = "Un jeu de société super sympa à jouer entre amis !"
-    val image: String = ""
 }
 
 @Composable

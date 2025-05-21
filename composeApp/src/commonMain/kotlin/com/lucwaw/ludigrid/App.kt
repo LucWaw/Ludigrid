@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.lucwaw.ludigrid.screen.detail.DetailScreen
 import com.lucwaw.ludigrid.screen.home.HomeScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -54,20 +55,10 @@ fun App(windowSizeClass: WindowSizeClass) {
         } else {
             // Pas de bottom bar ici
             when (currentScreen) {
-                Screen.DETAIL -> DetailScreen(onBack = { currentScreen = Screen.HOME })
+                Screen.DETAIL -> DetailScreen()
                 else -> {}
             }
         }
-    }
-
-}
-
-@Composable
-fun DetailScreen(onBack: () -> Unit) {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ){
-        ToolBar()
     }
 
 }

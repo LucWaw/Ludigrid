@@ -7,4 +7,9 @@
     <string name="sort_rating">Trier par note</string>
     <string name="sort_date">Trier par date</string>
     <string name="games">Jeux de société</string>
+    <string name="go_back">Retour</string>
+    <string name="add">Ajouter</string>
+    <string name="Par">Par %1$s %2$s</string>
+    <string name="comments">Commentaires</string>
+    <string name="no_comments">Il n'y a pas encore de commentaires.</string>
 </resources>
