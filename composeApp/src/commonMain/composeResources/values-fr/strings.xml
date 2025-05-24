@@ -12,4 +12,8 @@
     <string name="Par">Par %1$s %2$s</string>
     <string name="comments">Commentaires</string>
     <string name="no_comments">Il n'y a pas encore de commentaires.</string>
+    <string name="share">Partager</string>
+    <string name="delete">Commenter</string>
+    <string name="add_a_comment">Ajouter un commentaire</string>
+    <string name="actions">Actions</string>
 </resources>

@@ -59,11 +59,13 @@ import coil3.compose.SubcomposeAsyncImage
 import com.lucwaw.ludigrid.domain.Author
 import com.lucwaw.ludigrid.domain.Post
 import ludigrid.composeapp.generated.resources.Res
+import ludigrid.composeapp.generated.resources.error_image
 import ludigrid.composeapp.generated.resources.games
 import ludigrid.composeapp.generated.resources.sort_date
 import ludigrid.composeapp.generated.resources.sort_name
 import ludigrid.composeapp.generated.resources.sort_options
 import ludigrid.composeapp.generated.resources.sort_rating
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -276,9 +278,9 @@ fun Post(
                                         Icon(
                                             imageVector = Icons.Default.Warning,
                                             contentDescription = null,
-                                            tint = Color.Red,
+                                            tint = Color(0xFF86B2E8),
                                             modifier = Modifier
-                                                .size(150.dp)
+                                                .size(20.dp)
                                         )
                                     }
                                 }
@@ -326,21 +328,10 @@ fun Post(
                         )
                     } else {
                         Image(
-                            painter = ColorPainter(Color.Red),
-                            contentDescription = "Error",
-                            modifier = Modifier.fillMaxSize()
+                            painter = painterResource(Res.drawable.error_image),
+                            contentDescription = "Error Image",
+                            contentScale = ContentScale.Crop
                         )
-                        /*Column(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-
-                            Text(
-                                text = "Error when loading image",
-                                textAlign = TextAlign.Center
-                            )
-                        }*/
                     }
                 }
             )

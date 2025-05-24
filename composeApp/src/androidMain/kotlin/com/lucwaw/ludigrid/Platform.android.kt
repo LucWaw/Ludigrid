@@ -29,25 +29,35 @@ actual fun getPlatform(): Platform = AndroidPlatform()
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-actual fun BoxScope.ToolBar(modifier: Modifier){
+actual fun BoxScope.ToolBar(modifier: Modifier, share: () -> Unit, delete: () -> Unit, addAComment: () -> Unit){
     var expanded by rememberSaveable { mutableStateOf(true) }
 
     HorizontalFloatingToolbar(
         expanded = expanded,
         floatingActionButton = {
             FloatingToolbarDefaults.VibrantFloatingActionButton(
-                {/*TODO*/}
+                {addAComment()}
             ) { Icon(Icons.Filled.Add,contentDescription = "Add A comment")}
         },
         modifier =
-            Modifier.align(Alignment.BottomCenter).padding(bottom = 50.dp)
+            Modifier.align(Alignment.BottomCenter).padding(bottom = 40.dp)
     ) {
-        IconButton(onClick = { /* doSomething() */ }) {
+        IconButton(onClick = { share() }) {
             Icon(Icons.Filled.Share, contentDescription = "Share The Content")
         }
-        IconButton(onClick = { /* doSomething() */ }) {
+        IconButton(onClick = { delete() }) {
             Icon(Icons.Filled.Delete, contentDescription = "Delete The Post")
         }
 
     }
+}
+
+@Composable
+actual fun FAB(onClick : () -> Unit){
+    //NOTHING
+}
+
+@Composable
+actual fun MENU(share: () -> Unit, delete: () -> Unit, addAComment: () -> Unit) {
+    //NOTHING
 }

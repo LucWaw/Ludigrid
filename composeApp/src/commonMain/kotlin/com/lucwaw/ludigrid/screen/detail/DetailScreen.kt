@@ -3,9 +3,11 @@ package com.lucwaw.ludigrid.screen.detail
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -15,10 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -32,11 +31,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.lucwaw.ludigrid.FAB
+import com.lucwaw.ludigrid.MENU
+import com.lucwaw.ludigrid.ToolBar
 import com.lucwaw.ludigrid.domain.Author
 import com.lucwaw.ludigrid.domain.Comment
 import com.lucwaw.ludigrid.domain.Post
 import ludigrid.composeapp.generated.resources.Res
-import ludigrid.composeapp.generated.resources.add
 import ludigrid.composeapp.generated.resources.by
 import ludigrid.composeapp.generated.resources.comments
 import ludigrid.composeapp.generated.resources.go_back
@@ -78,22 +79,19 @@ fun DetailScreen() {
                         contentDescription = stringResource(Res.string.go_back)
                     )
                 }
+            },
+            actions = {
+                MENU(
+                    share = { /*TODO*/ },
+                    delete = { /*TODO*/ },
+                    addAComment = { /*TODO*/ }
+                )
             }
         )
     },
-    floatingActionButtonPosition = FabPosition.End,
-    floatingActionButton = {
-        FloatingActionButton(
-            onClick = {
-                //TODO
-            }
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Add,
-                contentDescription = stringResource(Res.string.add)
-            )
+        floatingActionButton = {
+            FAB(onClick = {/*TODO*/})
         }
-    }
     ) { contentPadding ->
 
         MainDetail(
@@ -101,7 +99,9 @@ fun DetailScreen() {
             post = post,
             comments = comments
         )
-
+        Box(modifier = Modifier.fillMaxSize().padding(contentPadding), Alignment.BottomCenter){
+            ToolBar( share = { /*TODO*/ }, delete = { /*TODO*/ }, addAComment = { /*TODO*/ })
+        }
 
     }
 }
