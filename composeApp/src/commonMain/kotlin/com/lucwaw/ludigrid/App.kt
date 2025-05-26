@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.lucwaw.ludigrid.screen.addpost.AddPostScreen
 import com.lucwaw.ludigrid.screen.detail.DetailScreen
 import com.lucwaw.ludigrid.screen.home.HomeScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -46,7 +47,8 @@ fun App(windowSizeClass: WindowSizeClass) {
                 when (currentScreen) {
                     Screen.HOME -> HomeScreen(
                         windowSizeClass = windowSizeClass,
-                        onNavigateToDetail = { currentScreen = Screen.DETAIL }
+                        onNavigateToDetail = { currentScreen = Screen.DETAIL },
+                        onNavigateToAddPost = { currentScreen = Screen.ADDPOST }
                     )
                     Screen.PROFILE -> ProfileScreen()
                     else -> {}
@@ -56,6 +58,7 @@ fun App(windowSizeClass: WindowSizeClass) {
             // Pas de bottom bar ici
             when (currentScreen) {
                 Screen.DETAIL -> DetailScreen()
+                Screen.ADDPOST -> AddPostScreen()
                 else -> {}
             }
         }
@@ -77,5 +80,6 @@ enum class Screen(
 ) {
     HOME(),
     PROFILE(),
-    DETAIL()
+    DETAIL(),
+    ADDPOST()
 }

@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Warning
@@ -27,6 +28,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -70,7 +72,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit) {
+fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit, onNavigateToAddPost: () -> Unit) {
     val post = Post(
         id = "1",
         author = Author(
@@ -186,7 +188,18 @@ fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit)
                 }
 
             }
-        }
+        },
+        floatingActionButton =
+            {
+                FloatingActionButton(
+                    onClick = { onNavigateToAddPost() }
+                ){
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = null
+                    )
+                }
+            }
     ) { paddingValues ->
         Box(
             modifier = Modifier.padding(paddingValues)
@@ -197,6 +210,7 @@ fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit)
 
     }
 }
+
 
 
 @Composable

@@ -75,6 +75,9 @@ kotlin {
             implementation(libs.material.icons.extended)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor3)
+            implementation("io.github.vinceglb:filekit-core:0.10.0-beta04")
+            implementation("io.github.vinceglb:filekit-dialogs:0.10.0-beta04")
+            implementation("io.github.vinceglb:filekit-dialogs-compose:0.10.0-beta04")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
