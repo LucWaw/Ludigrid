@@ -11,4 +11,6 @@ fun main() {
     ComposeViewport(document.body!!) {
         App(calculateWindowSizeClass())
     }
+    startup()
+
 }

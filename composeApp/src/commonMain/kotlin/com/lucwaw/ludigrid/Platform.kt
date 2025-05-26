@@ -20,3 +20,6 @@ expect fun FAB(onClick: () -> Unit)
 
 @Composable
 expect fun MENU(share: () -> Unit, delete: () -> Unit, addAComment: () -> Unit)
+
+@Composable
+expect fun TakePicture()

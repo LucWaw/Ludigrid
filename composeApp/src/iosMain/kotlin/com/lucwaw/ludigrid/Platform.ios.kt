@@ -51,3 +51,8 @@ actual fun MENU(
 ) {
     //NOTHING
 }
+
+@Composable
+actual fun TakePicture() {
+    TODO("Not yet implemented")
+}

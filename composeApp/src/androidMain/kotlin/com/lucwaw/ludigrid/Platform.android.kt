@@ -61,3 +61,8 @@ actual fun FAB(onClick : () -> Unit){
 actual fun MENU(share: () -> Unit, delete: () -> Unit, addAComment: () -> Unit) {
     //NOTHING
 }
+
+@Composable
+actual fun TakePicture() {
+    TODO("Not yet implemented")
+}
