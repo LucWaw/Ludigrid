@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -72,7 +71,11 @@ import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit, onNavigateToAddPost: () -> Unit) {
+fun HomeScreen(
+    windowSizeClass: WindowSizeClass,
+    onNavigateToDetail: () -> Unit,
+    onNavigateToAddPost: () -> Unit
+) {
     val post = Post(
         id = "1",
         author = Author(
@@ -102,7 +105,6 @@ fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit,
                                 .background(MaterialTheme.colorScheme.surface)
                                 .padding(horizontal = 8.dp, vertical = 4.dp)
                         ) {
-
 
 
                             Box {
@@ -158,7 +160,7 @@ fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit,
                             query = searchQuery,
                             onQueryChange = {
                                 searchQuery = it
-                             },
+                            },
                             onSearch = {
                                 /*TODO FILTER*/
                                 isSearchActive = false
@@ -167,7 +169,7 @@ fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit,
                             onExpandedChange = { isSearchActive = it },
                             placeholder = { Text("Search") },
                             trailingIcon = {
-                                if (isSearchActive){
+                                if (isSearchActive) {
                                     IconButton(
                                         onClick = { isSearchActive = false }
                                     ) {
@@ -193,7 +195,7 @@ fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit,
             {
                 FloatingActionButton(
                     onClick = { onNavigateToAddPost() }
-                ){
+                ) {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = null
@@ -204,7 +206,7 @@ fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit,
         Box(
             modifier = Modifier.padding(paddingValues)
         ) {
-            LazyGrid(posts,windowSizeClass, onNavigateToDetail)
+            LazyGrid(posts, windowSizeClass, onNavigateToDetail)
 
         }
 
@@ -212,17 +214,16 @@ fun HomeScreen(windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit,
 }
 
 
-
 @Composable
-fun LazyGrid(posts : List<Post>, windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit) {
+fun LazyGrid(posts: List<Post>, windowSizeClass: WindowSizeClass, onNavigateToDetail: () -> Unit) {
     LazyVerticalGrid(
         columns = rememberColumns(windowSizeClass),
         contentPadding = PaddingValues(18.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
-    ){
+    ) {
         items(posts, key = { item -> item.id }
-        ){
+        ) {
             Post(it, onClick = onNavigateToDetail)
         }
     }
@@ -250,8 +251,6 @@ fun Post(
         onClick =
             { onClick() },
         modifier = modifier
-            .width(360.dp)
-            .height(342.dp)
     ) {
         Column {
             Row(
@@ -327,33 +326,35 @@ fun Post(
                 }
 
             }
-            SubcomposeAsyncImage(
-                modifier = Modifier
-                    .weight(1.1f),
-                model = post.image,
-                contentDescription = "Post Image",
-                contentScale = ContentScale.Crop,
-                error = {
-                    if (LocalInspectionMode.current) {
-                        Image(
-                            painter = ColorPainter(Color.Red),
-                            contentDescription = "Error",
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    } else {
-                        Image(
-                            painter = painterResource(Res.drawable.error_image),
-                            contentDescription = "Error Image",
-                            contentScale = ContentScale.Crop
-                        )
+            if (post.image.isNotEmpty()) {
+                SubcomposeAsyncImage(
+                    modifier = Modifier
+                        .height(180.dp),
+                    model = post.image,
+                    contentDescription = "Post Image",
+                    contentScale = ContentScale.Crop,
+                    error = {
+                        if (LocalInspectionMode.current) {
+                            Image(
+                                painter = ColorPainter(Color.Red),
+                                contentDescription = "Error",
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        } else {
+                            Image(
+                                painter = painterResource(Res.drawable.error_image),
+                                contentDescription = "Error Image",
+                                contentScale = ContentScale.Crop
+                            )
+                        }
                     }
-                }
-            )
+                )
+            }
+
 
             Text(
                 text = post.description,
                 modifier = Modifier
-                    .weight(1f)
                     .padding(16.dp)
             )
         }
