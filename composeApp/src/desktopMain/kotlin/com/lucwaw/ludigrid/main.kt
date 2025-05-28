@@ -11,7 +11,7 @@ fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         alwaysOnTop = true,
-        title = "Ludigrid",
+        title = "Ludigrid"
     ) {
         App(calculateWindowSizeClass())
     }

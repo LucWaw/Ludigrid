@@ -128,6 +128,17 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.lucwaw.ludigrid"
             packageVersion = "1.0.0"
+
+            windows {
+                shortcut = true
+                iconFile.set(project.file("icon.ico"))
+            }
+            linux {
+                iconFile.set(project.file("src/androidMain/ic_launcher-playstore.png"))
+            }
+            macOS {
+                iconFile.set(project.file("icon.icns"))
+            }
         }
     }
 }
