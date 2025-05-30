@@ -18,6 +18,7 @@ actual fun getPlatform(): Platform = IOSPlatform()
 
 @Composable
 actual fun BoxScope.ToolBar(
+    expanded: Boolean,
     modifier: Modifier,
     share: () -> Unit,
     delete: () -> Unit,
@@ -39,7 +40,12 @@ actual fun BoxScope.ToolBar(
 }
 
 @Composable
-actual fun FAB(onClick: () -> Unit) {
+actual fun FAB(
+    expanded: Boolean,
+    share: () -> Unit,
+    delete: () -> Unit,
+    addAComment: () -> Unit
+) {
     //NOTHING
 }
 
@@ -50,4 +56,13 @@ actual fun MENU(
     addAComment: () -> Unit
 ) {
     //NOTHING
+}
+
+actual fun Modifier.toolBarModifier(
+    toolbarExpanded: Boolean,
+    onExpand: () -> Unit,
+    onCollapse: () -> Unit
+): Modifier {
+    //DO NOTHING
+    return this
 }

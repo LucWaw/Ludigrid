@@ -14,6 +14,7 @@ actual fun getPlatform(): Platform = JVMPlatform()
 
 @Composable
 actual fun BoxScope.ToolBar(
+    expanded: Boolean,
     modifier: Modifier,
     share: () -> Unit,
     delete: () -> Unit,
@@ -23,11 +24,25 @@ actual fun BoxScope.ToolBar(
 }
 
 @Composable
-actual fun FAB(onClick : () -> Unit){
-    FABSharedImpl(onClick)
+actual fun FAB(
+    expanded: Boolean,
+    share: () -> Unit,
+    delete: () -> Unit,
+    addAComment: () -> Unit
+) {
+    FABSharedImpl(addAComment)
 }
 
 @Composable
 actual fun MENU(share: () -> Unit, delete: () -> Unit, addAComment: () -> Unit) {
     MENUSharedImpl(share, delete, addAComment)
+}
+
+actual fun Modifier.toolBarModifier(
+    toolbarExpanded: Boolean,
+    onExpand: () -> Unit,
+    onCollapse: () -> Unit
+): Modifier {
+    //DO NOTHING
+    return this
 }

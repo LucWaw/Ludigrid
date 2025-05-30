@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,9 +27,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -38,6 +44,7 @@ import com.lucwaw.ludigrid.ToolBar
 import com.lucwaw.ludigrid.domain.Author
 import com.lucwaw.ludigrid.domain.Comment
 import com.lucwaw.ludigrid.domain.Post
+import com.lucwaw.ludigrid.toolBarModifier
 import ludigrid.composeapp.generated.resources.Res
 import ludigrid.composeapp.generated.resources.by
 import ludigrid.composeapp.generated.resources.comments
@@ -69,6 +76,8 @@ fun DetailScreen(onNavigateToBack: () -> Unit) {
             )
         )
     }
+    var toolbarExpanded by rememberSaveable { mutableStateOf(true) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -95,12 +104,12 @@ fun DetailScreen(onNavigateToBack: () -> Unit) {
             )
         },
         floatingActionButton = {
-            FAB(onClick = {/*TODO*/ })
+            FAB(expanded = toolbarExpanded,share = { /*TODO*/ }, delete = { /*TODO*/ }, addAComment = { /*TODO*/ })
         }
     ) { contentPadding ->
-
         LazyColumn(
-            modifier = Modifier.padding(contentPadding),
+            modifier = Modifier.padding(contentPadding).toolBarModifier(toolbarExpanded, onExpand = {toolbarExpanded = true}, onCollapse = {toolbarExpanded = false}),
+            contentPadding = PaddingValues(10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             item {
@@ -116,11 +125,12 @@ fun DetailScreen(onNavigateToBack: () -> Unit) {
         }
 
         Box(modifier = Modifier.fillMaxSize().padding(contentPadding), Alignment.BottomCenter) {
-            ToolBar(share = { /*TODO*/ }, delete = { /*TODO*/ }, addAComment = { /*TODO*/ })
+            ToolBar(expanded = toolbarExpanded,share = { /*TODO*/ }, delete = { /*TODO*/ }, addAComment = { /*TODO*/ })
         }
 
     }
 }
+
 
 private fun LazyListScope.comments(comments: List<Comment>) {
     if (comments.isEmpty()) {
@@ -142,7 +152,7 @@ fun MainDetail(
     modifier: Modifier = Modifier,
     post: Post
 ) {
-    Column(modifier = modifier.padding(8.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Detail(
             post = post
         )
@@ -232,7 +242,7 @@ fun CommentItem(comment: Comment, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .clip(shape = RoundedCornerShape(20.dp))
-            .background(color = MaterialTheme.colorScheme.tertiaryContainer)
+            .background(color = Color(0xFFFBFB78))
             .padding(14.dp)
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)

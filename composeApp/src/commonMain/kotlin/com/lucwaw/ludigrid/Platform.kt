@@ -12,11 +12,17 @@ expect fun getPlatform(): Platform
 
 
 @Composable
-expect fun BoxScope.ToolBar(modifier: Modifier = Modifier, share: () -> Unit, delete: () -> Unit, addAComment: () -> Unit)
+expect fun BoxScope.ToolBar(expanded : Boolean, modifier: Modifier = Modifier, share: () -> Unit, delete: () -> Unit, addAComment: () -> Unit)
 
 
 @Composable
-expect fun FAB(onClick: () -> Unit)
+expect fun FAB(expanded : Boolean,share: () -> Unit, delete: () -> Unit, addAComment: () -> Unit)
 
 @Composable
 expect fun MENU(share: () -> Unit, delete: () -> Unit, addAComment: () -> Unit)
+
+
+expect fun Modifier.toolBarModifier(toolbarExpanded: Boolean,
+    onExpand: () -> Unit,
+    onCollapse: () -> Unit
+): Modifier
