@@ -60,6 +60,12 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
 import com.lucwaw.ludigrid.domain.Author
 import com.lucwaw.ludigrid.domain.Post
+import com.lucwaw.ludigrid.util.DateUtil.Companion.now
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.format.DayOfWeekNames
+import kotlinx.datetime.format.Padding
+import kotlinx.datetime.format.char
 import ludigrid.composeapp.generated.resources.Res
 import ludigrid.composeapp.generated.resources.error_image
 import ludigrid.composeapp.generated.resources.games
@@ -236,6 +242,20 @@ fun Post(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
+    val date : LocalDate = LocalDateTime.now().date  //Just to test all fonctionnality
+    val dateFormat = LocalDate.Format {
+        dayOfMonth()
+        char('/')
+        monthNumber()
+        char('/')
+        year()
+    }
+    date.toEpochDays()
+
+    val formatedDate = dateFormat.format(LocalDate.fromEpochDays(    date.toEpochDays()
+    ))
+
+
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -299,8 +319,8 @@ fun Post(
                     ) {
                         Text(
                             post.title,
-
-                            )
+                            fontWeight = MaterialTheme.typography.titleMedium.fontWeight
+                        )
                         Text(
                             post.author.name
                         )
@@ -343,12 +363,20 @@ fun Post(
                 )
             }
 
+            Row (horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(
+                    text = post.description,
+                    modifier = Modifier
+                        .padding(16.dp)
+                )
+                Text(
+                    text = formatedDate,
+                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                    modifier = Modifier
+                        .padding(16.dp)
+                )
+            }
 
-            Text(
-                text = post.description,
-                modifier = Modifier
-                    .padding(16.dp)
-            )
         }
 
 

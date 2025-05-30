@@ -78,6 +78,7 @@ kotlin {
             implementation("io.github.vinceglb:filekit-core:0.10.0-beta04")
             implementation("io.github.vinceglb:filekit-dialogs:0.10.0-beta04")
             implementation("io.github.vinceglb:filekit-dialogs-compose:0.10.0-beta04")
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
