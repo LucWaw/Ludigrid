@@ -57,7 +57,7 @@ fun App(windowSizeClass: WindowSizeClass) {
         } else {
             // Pas de bottom bar ici
             when (currentScreen) {
-                Screen.DETAIL -> DetailScreen()
+                Screen.DETAIL -> DetailScreen(onNavigateToBack =  { currentScreen = Screen.HOME })
                 Screen.ADDPOST -> AddPostScreen()
                 else -> {}
             }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -98,53 +99,43 @@ fun HomeScreen(
                     title = { Text(text = stringResource(Res.string.games)) },
                     actions = {
                         var expanded by remember { mutableStateOf(false) }
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .padding(end = 8.dp)
-                                .background(MaterialTheme.colorScheme.surface)
-                                .padding(horizontal = 8.dp, vertical = 4.dp)
-                        ) {
 
-
-                            Box {
-                                IconButton(onClick = { expanded = true }) {
-                                    Icon(
-                                        Icons.Default.MoreVert,
-                                        contentDescription = stringResource(
-                                            Res.string.sort_options
-                                        )
+                        Box {
+                            IconButton(onClick = { expanded = true }) {
+                                Icon(
+                                    Icons.Default.MoreVert,
+                                    contentDescription = stringResource(
+                                        Res.string.sort_options
                                     )
-                                }
-                                DropdownMenu(
-                                    expanded = expanded,
-                                    onDismissRequest = { expanded = false },
-                                    offset = DpOffset(x = 0.dp, y = 0.dp)
-                                ) {
-                                    DropdownMenuItem(
-                                        onClick = {
-                                            //TODO Sort
-                                            expanded = false
-                                        },
-                                        text = { Text(stringResource(Res.string.sort_name)) }
-                                    )
-                                    DropdownMenuItem(
-                                        onClick = {
-                                            //Todo Sort
-                                            expanded = false
-                                        },
-                                        text = { Text(stringResource(Res.string.sort_rating)) }
-                                    )
-                                    DropdownMenuItem(
-                                        onClick = {
-                                            //Todo Sort
-                                            expanded = false
-                                        },
-                                        text = { Text(stringResource(Res.string.sort_date)) }
-                                    )
-                                }
+                                )
                             }
-
+                            DropdownMenu(
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false },
+                                offset = DpOffset(x = 0.dp, y = 0.dp)
+                            ) {
+                                DropdownMenuItem(
+                                    onClick = {
+                                        //TODO Sort
+                                        expanded = false
+                                    },
+                                    text = { Text(stringResource(Res.string.sort_name)) }
+                                )
+                                DropdownMenuItem(
+                                    onClick = {
+                                        //Todo Sort
+                                        expanded = false
+                                    },
+                                    text = { Text(stringResource(Res.string.sort_rating)) }
+                                )
+                                DropdownMenuItem(
+                                    onClick = {
+                                        //Todo Sort
+                                        expanded = false
+                                    },
+                                    text = { Text(stringResource(Res.string.sort_date)) }
+                                )
+                            }
                         }
                     }
                 )
@@ -153,8 +144,9 @@ fun HomeScreen(
 
 
                 SearchBar(
-                    modifier = Modifier
-                        .semantics { traversalIndex = 0f }.fillMaxWidth().padding(16.dp),
+                    windowInsets = WindowInsets(top = 0.dp),
+                            modifier = Modifier
+                        .semantics { traversalIndex = 0f }.fillMaxWidth().padding(start = 16.dp, end = 16.dp),
                     inputField = {
                         SearchBarDefaults.InputField(
                             query = searchQuery,
