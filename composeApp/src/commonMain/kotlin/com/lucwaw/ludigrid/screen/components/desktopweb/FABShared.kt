@@ -1,4 +1,4 @@
-package com.lucwaw.ludigrid.components.desktopweb
+package com.lucwaw.ludigrid.screen.components.desktopweb
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
