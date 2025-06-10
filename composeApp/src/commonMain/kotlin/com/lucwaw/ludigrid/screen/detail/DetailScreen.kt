@@ -1,7 +1,9 @@
 package com.lucwaw.ludigrid.screen.detail
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +31,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -45,6 +48,7 @@ import com.lucwaw.ludigrid.domain.Author
 import com.lucwaw.ludigrid.domain.Comment
 import com.lucwaw.ludigrid.domain.Post
 import com.lucwaw.ludigrid.toolBarModifier
+import com.lucwaw.ludigrid.util.DateUtil.Companion.formatDate
 import ludigrid.composeapp.generated.resources.Res
 import ludigrid.composeapp.generated.resources.by
 import ludigrid.composeapp.generated.resources.comments
@@ -62,7 +66,7 @@ fun DetailScreen(onNavigateToBack: () -> Unit) {
         title = "Codenames",
         author = Author(
             id = "1",
-            name = "John Doe",
+            name = "John Doe Junior",
             avatar = "https://www.example.com"
         ),
         description = "Description"
@@ -71,7 +75,7 @@ fun DetailScreen(onNavigateToBack: () -> Unit) {
         Comment(
             comment = "Comment $it", author = Author(
                 id = it.toString(),
-                name = "John Doe",
+                name = "John Doe junior",
                 avatar = "https://www.example.com"
             )
         )
@@ -198,15 +202,7 @@ fun Detail(modifier: Modifier = Modifier, post: Post) {
                 style = MaterialTheme.typography.titleLarge
             )
             Text(
-                text = if (post.author.name.contains(" ")) {
-                    stringResource(
-                        Res.string.by,
-                        post.author.name.split(" ")[0],
-                        post.author.name.split(" ")[1]
-                    )
-                } else {
-                    stringResource(Res.string.by, post.author.name, "")
-                },
+                text = formatAuthor(post.author.name),
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -239,26 +235,38 @@ fun Headline(modifier: Modifier = Modifier) {
 
 @Composable
 fun CommentItem(comment: Comment, modifier: Modifier = Modifier) {
+    var showDetail by remember { mutableStateOf(false) }
     Column(
         modifier = modifier
             .clip(shape = RoundedCornerShape(20.dp))
+            .clickable(
+                onClick = { showDetail = !showDetail }
+            )
             .background(color = Color(0xFFFBFB78))
             .padding(14.dp)
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            text = if (comment.author.name.contains(" ")) {
-                stringResource(
-                    Res.string.by,
-                    comment.author.name.split(" ")[0],
-                    comment.author.name.split(" ")[1]
-                )
-            } else {
-                stringResource(Res.string.by, comment.author.name, "")
-            },
+            text = formatAuthor(comment.author.name),
             style = MaterialTheme.typography.bodySmall
         )
         Text(text = comment.comment, style = MaterialTheme.typography.bodyMedium)
+        AnimatedVisibility(
+            visible = showDetail
+        ){
+            Text(comment.publishDate.formatDate(), style = MaterialTheme.typography.bodySmall)
+        }
     }
+}
+
+@Composable
+private fun formatAuthor(author: String): String = if (author.contains(" ")) {
+    stringResource(
+        Res.string.by,
+        author.split(" ")[0],
+        author.split(" ").drop(1).joinToString(" ")
+    )
+} else {
+    stringResource(Res.string.by, author, "")
 }
